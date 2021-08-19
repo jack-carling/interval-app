@@ -33,10 +33,10 @@ export default {
     };
   },
   methods: {
-    countDown(min) {
+    countDown(payload) {
       this.showTimer = 'visual';
-      console.log('in countdown app', min);
-      this.timer.start({ countdown: true, startValues: { minutes: min } });
+      console.log('in countdown app', payload.minutes);
+      this.timer.start({ countdown: true, startValues: { minutes: payload.minutes } });
       this.timer.addEventListener('secondsUpdated', () => {
         this.timeLeft = this.timer.getTimeValues().toString(['minutes', 'seconds']);
         this.minutesLeft = this.timer.getTimeValues().minutes;
@@ -47,6 +47,8 @@ export default {
         //this.timeLeft = "Time´s up";
         //Show Times up-component
       });
+      console.log('<app>intervalbox ', payload.intervalBox)
+      console.log('<app>breakbox ', payload.breakBox)
     },
   },
 };
