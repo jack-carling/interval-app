@@ -1,14 +1,34 @@
 <template>
-  <section>
-    <button @click="decreaseTime">-</button>
-    <span>{{ minutes }}</span>
-    <button @click="increaseTime">+</button>
-    <button @click="startTimer">Start Timer</button>
-
-    <input type="checkbox" />
-    <span>intervals</span>
-    <input type="checkbox" />
-    <span>5 min break / intervals</span>
+  <section class="setTimer">
+    <section class="minutes-container">
+      <span @click="decreaseTime" class="decrease">
+        <svg width="18" height="30" viewBox="0 0 18 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.75 1.5L2.25 15L15.75 28.5" stroke="#222222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <article class="minutes">
+        <h1>{{ minutes }}</h1>
+        <p>minutes</p>
+      </article>
+      <span @click="increaseTime" class="increase">
+        <svg width="18" height="30" viewBox="0 0 18 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.25 28.5L15.75 15L2.25 1.50001" stroke="#222222" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </section>
+    <section class="checkboxes">
+      <label class="container">
+        <input type="checkbox" v-model="intervalBox">
+        <span class="checkmark"></span>
+           intervals
+      </label>
+      <br>
+      <label class="container">
+        <input type="checkbox" v-model="breakBox">
+        <span class="checkmark"></span>
+        5 min break / intervals
+      </label>
+      <br>
+      <button @click="startTimer">Start Timer</button>
+    </section>
   </section>
 </template>
 
@@ -18,7 +38,9 @@ export default {
   data() {
     return {
       minutes: 10,
-    };
+      intervalBox: false,
+      breakBox: false
+    }
   },
   methods: {
     decreaseTime() {
@@ -32,11 +54,157 @@ export default {
       }
     },
     startTimer() {
-      console.log(this.minutes);
-      this.$emit('startTimer', this.minutes);
+      let payload = {
+        minutes:this.minutes,
+        intervalBox:this.intervalBox,
+        breakBox:this.breakBox
+      }
+      this.$emit('startTimer', payload);
     },
   },
+  watch: {
+    intervalBox(value) {
+      if(value) this.breakBox = false;
+    },
+    breakBox(value) {
+      if(value) this.intervalBox = false;
+    }
+  }
 };
 </script>
 
-<style></style>
+<style scooped>
+  @import url('https://fonts.googleapis.com/css2?family=PT+Sans&family=Righteous&display=swap');
+  .setTimer {
+    height: 100vh;
+    width: 100vw;
+    background-color: #E5E5E5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    color: #222222;
+    letter-spacing: 2px;
+    font-family: PT Sans;
+  }
+  h1 {
+    line-height: 0em;
+    font-size: 5em;
+  }
+  .minutes-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 10em;
+    width: 65vw;
+  }
+  .minutes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 6em;
+  }
+  .minutes h1 {
+    line-height: 0em;
+    font-size: 5em;
+    margin: 20px 0;
+  }
+  .minutes p {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+    color: #888888;
+  }
+  .checkboxes {
+    width: 80vw;
+    position: absolute;
+    bottom: 3em;
+  }
+  .checkboxes button {
+    width: 100%;
+    padding: 0.3em;
+    text-transform: uppercase;
+    border: 1px solid #222;
+    font-size: 1.8em;
+    font-family: 'PT Sans';
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-top: 1em;
+    border-radius: 5px;
+    background-color: #E5E5E5;
+  }
+  .container {
+    display: block;
+    position: relative;
+    padding-left: 45px;
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #E5E5E5;
+  border: 1px solid #222;
+  border-radius: 3px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #222;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+</style>
