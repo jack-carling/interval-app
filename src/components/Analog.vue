@@ -14,10 +14,18 @@ export default {
   },
   watch: {
     minutes() {
+      this.handleMinutes();
+    },
+    seconds() {
+      this.handleSeconds();
+    },
+  },
+  methods: {
+    handleMinutes() {
       const degree = (this.minutes / 60) * 360;
       this.$refs.minutes.style.transform = `rotate(${degree}deg)`;
     },
-    seconds() {
+    handleSeconds() {
       const degree = (this.seconds / 60) * 360;
       this.$refs.seconds.style.transform = `rotate(${degree}deg)`;
       if (this.seconds === 59) {
@@ -26,6 +34,10 @@ export default {
         this.$refs.seconds.style.transition = 'all 1s linear';
       }
     },
+  },
+  mounted() {
+    this.handleSeconds();
+    this.handleMinutes();
   },
 };
 </script>
