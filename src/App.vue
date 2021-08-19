@@ -1,15 +1,9 @@
 <template>
   <div id="app">
     <h1>Interval App</h1>
-    <!--<button @click="decreaseTime">-</button>
-    <span>{{ minutes }}</span>
-    <button @click="increaseTime">+</button>
-    <p>{{ timeLeft }}</p>
-    <hr>-->
     <SetTimer v-on:startTimer="countDown" />
     <Digital v-bind:timeLeft="timeLeft" />
-
-    <!--<p>{{ timeLeft }}</p>-->
+    <Analog v-bind:seconds="secondsLeft" v-bind:minutes="minutesLeft" />
   </div>
 </template>
 
@@ -17,43 +11,37 @@
 import Timer from 'easytimer.js';
 import SetTimer from '@/components/SetTimer';
 import Digital from '@/components/Digital';
+import Analog from '@/components/Analog';
 
 export default {
   components: {
     SetTimer,
-    Digital
+    Digital,
+    Analog,
   },
   data() {
     return {
       timer: new Timer(),
-      minutes: 10,
       timeLeft: '',
+      minutesLeft: 0,
+      secondsLeft: 0,
     };
   },
   methods: {
-    decreaseTime() {
-      if (this.minutes > 1) {
-        this.minutes--;
-      }
-    },
-    increaseTime() {
-      if (this.minutes < 59) {
-        this.minutes++;
-      }
-    },
     countDown(min) {
       console.log('in countdown app', min);
-      this.minutes = min;
-      this.timer.start({ countdown: true, startValues: { minutes: this.minutes }});
+      this.timer.start({ countdown: true, startValues: { minutes: min } });
       this.timer.addEventListener('secondsUpdated', () => {
-        this.timeLeft = this.timer.getTimeValues().toString();
+        this.timeLeft = this.timer.getTimeValues().toString(['minutes', 'seconds']);
+        this.minutesLeft = this.timer.getTimeValues().minutes;
+        this.secondsLeft = this.timer.getTimeValues().seconds;
       });
       this.timer.addEventListener('targetAchieved', () => {
         //this.timeLeft = "Time´s up";
         //Show Times up-component
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

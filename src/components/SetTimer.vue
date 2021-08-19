@@ -4,6 +4,11 @@
     <span>{{ minutes }}</span>
     <button @click="increaseTime">+</button>
     <button @click="startTimer">Start Timer</button>
+
+    <input type="checkbox" />
+    <span>intervals</span>
+    <input type="checkbox" />
+    <span>5 min break / intervals</span>
   </section>
 </template>
 
@@ -12,8 +17,8 @@ export default {
   name: 'SetTimer',
   data() {
     return {
-      minutes: 10
-    }
+      minutes: 10,
+    };
   },
   methods: {
     decreaseTime() {
@@ -29,11 +34,9 @@ export default {
     startTimer() {
       console.log(this.minutes);
       this.$emit('startTimer', this.minutes);
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
