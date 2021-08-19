@@ -23,7 +23,7 @@ export default {
       if (this.seconds === 59) {
         this.$refs.seconds.style.transition = 'none';
       } else {
-        this.$refs.seconds.style.transition = 'all 0.3s linear';
+        this.$refs.seconds.style.transition = 'all 1s linear';
       }
     },
   },
@@ -52,7 +52,7 @@ div.minutes {
   border-radius: 999px;
   transform-origin: bottom;
   transform: rotate(0deg);
-  transition: all 0.3s linear;
+  transition: all 0.5s linear;
 }
 div.seconds {
   height: 82px;
