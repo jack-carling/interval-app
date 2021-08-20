@@ -3,6 +3,7 @@
     <span @click="$emit('choose-timer', 'analog')">analog timer</span>
     <span @click="$emit('choose-timer', 'digital')">digital timer</span>
     <span @click="$emit('choose-timer', 'visual')">visual timer</span>
+    <span @click="$emit('choose-timer', 'text')">text timer</span>
   </section>
 </template>
 
