@@ -1,9 +1,11 @@
 <template>
-  <div class="clock">
-    <div ref="minutes" class="minutes"></div>
-    <div class="circle"></div>
-    <div ref="seconds" class="seconds"></div>
-  </div>
+  <section class="analog">
+    <div class="clock">
+      <div ref="minutes" class="minutes"></div>
+      <div class="circle"></div>
+      <div ref="seconds" class="seconds"></div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -43,6 +45,14 @@ export default {
 </script>
 
 <style scoped>
+.analog {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 div.clock {
   width: 200px;
   height: 200px;
