@@ -1,43 +1,16 @@
 <template>
   <section class="setTimer">
     <section class="minutes-container">
-      <span @click="decreaseTime" class="decrease">
-        <svg
-          width="18"
-          height="30"
-          viewBox="0 0 18 30"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15.75 1.5L2.25 15L15.75 28.5"
-            stroke="#222222"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </span>
+      <span @click="decreaseTime" class="decrease"
+        ><img src="../assets/left-chevron.svg" alt=""
+      /></span>
+
       <article class="minutes">
         <h1>{{ minutes }}</h1>
         <p>minutes</p>
       </article>
       <span @click="increaseTime" class="increase">
-        <svg
-          width="18"
-          height="30"
-          viewBox="0 0 18 30"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M2.25 28.5L15.75 15L2.25 1.50001"
-            stroke="#222222"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <img src="../assets/right-chevron.svg" alt="" />
       </span>
     </section>
     <section class="checkboxes">
@@ -50,7 +23,7 @@
       <label class="container">
         <input type="checkbox" v-model="breakBox" />
         <span class="checkmark"></span>
-        5 min break / intervals
+        5 min break / interval
       </label>
       <br />
       <button @click="startTimer">Start Timer</button>
@@ -99,11 +72,10 @@ export default {
 };
 </script>
 
-<style scooped>
+<style>
 .setTimer {
   height: 100vh;
   width: 100vw;
-  background-color: #e5e5e5;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -116,7 +88,7 @@ export default {
   letter-spacing: 2px;
   font-family: PT Sans;
 }
-h1 {
+.setTimer h1 {
   line-height: 0em;
   font-size: 5em;
 }
