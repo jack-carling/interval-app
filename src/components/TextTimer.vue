@@ -1,8 +1,8 @@
 <template>
   <section class="digital">
-    <h1> {{this.minutes}}: {{this.seconds}} / {{minutesText[minutes]}} : {{secondsText[seconds]}}</h1>
-    <!-- <h1> {{this.minutes}}: {{this.seconds}} / {{this.minutesText[this.minutes]}} : {{this.secondsText[this.seconds]}}</h1> -->
-  </section>
+    <h1 v-if="this.minutes" > {{minutesText[minutes]}} <span ref="toSingleMinute"></span> och {{secondsText[seconds]}} <span ref="toSingleSecond"></span> kvar</h1>
+    
+      </section>
 </template>
 
 <script>
@@ -15,24 +15,44 @@ name: 'TextTimer',
 data() {
     
     return {
-        secondsText :["noll", "ett", "två","tre","fyra", "fem","sex", "sju", "åtta", "nio","tio", "elva", "tolv", "tretton", "fjorton", "femton", "sexton", "sjutton", "arton", "nitton",  
-        "tjugo", "tjugoett", "tjugotvå", "tjugotre", "tjugofyra", "tjugofem", "tjugosex", "tjugosju", "tjugoåtta", "tjugonio",
-        "trettio","trettioett", "trettiotvå", "trettiotre", "trettiofyra", "trettiofem", "trettiosex", "trettiosju", "trettioåtta", "trettionio", 
-        "fyrtio", "fyrtioett","fyrtiotvå","fyrtiotre","fyrtiofyra","fyrtiofem","fyrtiosex","fyrtiosju","fyrtioåtta","fyrtionio",
-        "femtio", "femtioett", "femtiotvå", "femtiotre", "femtiofyra", "femtiofem", "femtiosex", "femtiosju", "femtioåtta", "femtionio",],
+        secondsText :["noll", "en", "två","tre","fyra", "fem","sex", "sju", "åtta", "nio","tio", "elva", "tolv", "tretton", "fjorton", "femton", "sexton", "sjutton", "arton", "nitton",  
+        "tjugo", "tjugoen", "tjugotvå", "tjugotre", "tjugofyra", "tjugofem", "tjugosex", "tjugosju", "tjugoåtta", "tjugonio",
+        "trettio","trettioen", "trettiotvå", "trettiotre", "trettiofyra", "trettiofem", "trettiosex", "trettiosju", "trettioåtta", "trettionio", 
+        "fyrtio", "fyrtioen","fyrtiotvå","fyrtiotre","fyrtiofyra","fyrtiofem","fyrtiosex","fyrtiosju","fyrtioåtta","fyrtionio",
+        "femtio", "femtioen", "femtiotvå", "femtiotre", "femtiofyra", "femtiofem", "femtiosex", "femtiosju", "femtioåtta", "femtionio",],
 
-        minutesText :["noll", "ett", "två","tre","fyra", "fem","sex", "sju", "åtta", "nio","tio", "elva", "tolv", "tretton", "fjorton", "femton", "sexton", "sjutton", "arton", "nitton",  
-        "tjugo", "tjugoett", "tjugotvå", "tjugotre", "tjugofyra", "tjugofem", "tjugosex", "tjugosju", "tjugoåtta", "tjugonio",
-        "trettio","trettioett", "trettiotvå", "trettiotre", "trettiofyra", "trettiofem", "trettiosex", "trettiosju", "trettioåtta", "trettionio", 
-        "fyrtio", "fyrtioett","fyrtiotvå","fyrtiotre","fyrtiofyra","fyrtiofem","fyrtiosex","fyrtiosju","fyrtioåtta","fyrtionio",
-        "femtio", "femtioett", "femtiotvå", "femtiotre", "femtiofyra", "femtiofem", "femtiosex", "femtiosju", "femtioåtta", "femtionio",],
-
+        minutesText :["noll", "en", "två","tre","fyra", "fem","sex", "sju", "åtta", "nio","tio", "elva", "tolv", "tretton", "fjorton", "femton", "sexton", "sjutton", "arton", "nitton",  
+        "tjugo", "tjugoen", "tjugotvå", "tjugotre", "tjugofyra", "tjugofem", "tjugosex", "tjugosju", "tjugoåtta", "tjugonio",
+        "trettio","trettioen", "trettiotvå", "trettiotre", "trettiofyra", "trettiofem", "trettiosex", "trettiosju", "trettioåtta", "trettionio", 
+        "fyrtio", "fyrtioen","fyrtiotvå","fyrtiotre","fyrtiofyra","fyrtiofem","fyrtiosex","fyrtiosju","fyrtioåtta","fyrtionio",
+        "femtio", "femtioen", "femtiotvå", "femtiotre", "femtiofyra", "femtiofem", "femtiosex", "femtiosju", "femtioåtta", "femtionio",],
 
       
     }
+},
+watch: {
+    minutes(){
+         this.handleSingleValue()
+    },
+    seconds() {
+        this.handleSingleValue()
+    }
+},
+methods: {
+    handleSingleValue() {
+      
+      if (this.minutes  === 1 ) {
+        this.$refs.toSingleMinute.innerText = 'minut';
+      } else if (this.seconds  === 1 ) {
+        this.$refs.toSingleSecond.innerText = 'sekund';
+      }
+       else  {
+        this.$refs.toSingleMinute.innerText = 'minuter';
+          this.$refs.toSingleSecond.innerText = 'sekunder';
+      }
+    },
+},
 
-    
-}
 }
 </script>
 
@@ -48,5 +68,8 @@ data() {
 }
 .digital h1 {
   font-size: 4em;
+  text-transform: uppercase;
 }
+
+
 </style>

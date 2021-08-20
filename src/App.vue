@@ -29,7 +29,8 @@
     />
     <TextTimer
       v-if="showTimer === 'text'"
-      :timeLeft="timeLeft"
+      :seconds="secondsLeft"
+      :minutes="minutesLeft"
     />
 
     <button @click="handleAbort" class="abort">abort timer</button>
