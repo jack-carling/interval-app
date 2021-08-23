@@ -27,6 +27,12 @@
       v-bind:seconds="secondsLeft"
       v-bind:minutes="minutesLeft"
     />
+    <TextTimer
+      v-if="showTimer === 'text'"
+      :seconds="secondsLeft"
+      :minutes="minutesLeft"
+    />
+
     <button @click="handleAbort" class="abort">abort timer</button>
     <TimesUp v-if="showTimesUp" @reset-timer="handleReset" />
     <Pause v-if="showPause" @reset-timer="handlePause" />
@@ -34,15 +40,16 @@
 </template>
 
 <script>
-import Timer from 'easytimer.js';
-import SetTimer from '@/components/SetTimer';
-import Digital from '@/components/Digital';
-import Analog from '@/components/Analog';
-import Visual from '@/components/Visual';
-import Menu from '@/components/Menu';
-import TimesUp from '@/components/TimesUp';
-import Pause from '@/components/Pause';
-import Loading from '@/components/Loading';
+import Timer from 'easytimer.js'
+import SetTimer from '@/components/SetTimer'
+import Digital from '@/components/Digital'
+import Analog from '@/components/Analog'
+import Visual from '@/components/Visual'
+import TextTimer from '@/components/TextTimer'
+import Menu from '@/components/Menu'
+import TimesUp from '@/components/TimesUp'
+import Pause from '@/components/Pause'
+import Loading from '@/components/Loading'
 
 export default {
   components: {
@@ -50,6 +57,7 @@ export default {
     Digital,
     Analog,
     Visual,
+    TextTimer,
     Menu,
     TimesUp,
     Pause,
@@ -69,32 +77,32 @@ export default {
       showPause: false,
       savedStartTime: 0,
       showLoading: true,
-    };
+    }
   },
   mounted() {
     setTimeout(() => {
-      this.showLoading = false;
-    }, 2000);
+      this.showLoading = false
+    }, 2000)
   },
   methods: {
     countDown(payload) {
-      this.showTimer = 'visual';
-      console.log('in countdown app', payload.minutes);
-      this.savedStartTime = payload.minutes;
+      this.showTimer = 'visual'
+      console.log('in countdown app', payload.minutes)
+      this.savedStartTime = payload.minutes
       this.timer.start({
         countdown: true,
         startValues: { minutes: payload.minutes },
-      });
+      })
       this.timer.addEventListener('secondsUpdated', () => {
         this.timeLeft = this.timer
           .getTimeValues()
-          .toString(['minutes', 'seconds']);
-        this.minutesLeft = this.timer.getTimeValues().minutes;
-        this.secondsLeft = this.timer.getTimeValues().seconds;
-      });
+          .toString(['minutes', 'seconds'])
+        this.minutesLeft = this.timer.getTimeValues().minutes
+        this.secondsLeft = this.timer.getTimeValues().seconds
+      })
       this.timeTotal =
         this.timer.getTimeValues().minutes * 60 +
-        this.timer.getTimeValues().seconds;
+        this.timer.getTimeValues().seconds
 
       this.timer.addEventListener('targetAchieved', () => {
         if (payload.intervalBox) {
@@ -102,52 +110,52 @@ export default {
           this.timer.start({
             countdown: true,
             startValues: { minutes: payload.minutes },
-          });
-          return;
+          })
+          return
         } else if (payload.breakBox) {
           // handle break
-          this.showPause = true;
-          return;
+          this.showPause = true
+          return
         } else {
           // handle time's up
-          this.showTimesUp = true;
+          this.showTimesUp = true
         }
-      });
-      this.showTimer = this.preferredTimer;
-      console.log('<app>intervalbox ', payload.intervalBox);
-      console.log('<app>breakbox ', payload.breakBox);
+      })
+      this.showTimer = this.preferredTimer
+      console.log('<app>intervalbox ', payload.intervalBox)
+      console.log('<app>breakbox ', payload.breakBox)
     },
     getNavIcon() {
-      const icon = require.context('./assets/', false, /\.svg$/);
-      return icon(`./nav-${this.showMenu ? 'white' : 'black'}.svg`);
+      const icon = require.context('./assets/', false, /\.svg$/)
+      return icon(`./nav-${this.showMenu ? 'white' : 'black'}.svg`)
     },
     chooseTimer(type) {
-      this.showMenu = false;
-      this.preferredTimer = type;
-      if (this.showTimer) this.showTimer = type;
+      this.showMenu = false
+      this.preferredTimer = type
+      if (this.showTimer) this.showTimer = type
     },
     handleAbort() {
-      this.showTimer = '';
-      this.timer.stop();
-      this.timeLeft = '';
-      this.timeTotal = 0;
-      this.minutesLeft = 0;
-      this.secondsLeft = 0;
-      this.preferredTimer = 'digital';
+      this.showTimer = ''
+      this.timer.stop()
+      this.timeLeft = ''
+      this.timeTotal = 0
+      this.minutesLeft = 0
+      this.secondsLeft = 0
+      this.preferredTimer = 'digital'
     },
     handleReset() {
-      this.handleAbort();
-      this.showTimesUp = false;
+      this.handleAbort()
+      this.showTimesUp = false
     },
     handlePause() {
       this.timer.start({
         countdown: true,
         startValues: { minutes: this.savedStartTime },
-      });
-      this.showPause = false;
+      })
+      this.showPause = false
     },
   },
-};
+}
 </script>
 
 <style>
