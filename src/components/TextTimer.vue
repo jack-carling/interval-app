@@ -1,8 +1,8 @@
 <template>
-  <section class="digital">
+  <section class="text">
     <h1>
-      {{ minutesText[minutes] }} <span ref="toSingleMinute"></span> och
-      {{ secondsText[seconds] }} <span ref="toSingleSecond"></span> kvar
+      {{ minutesText[minutes] }} <span> {{ singleMinute }} </span> och
+      {{ secondsText[seconds] }} <span> {{ singleSecond }} </span> kvar
     </h1>
   </section>
 </template>
@@ -143,28 +143,21 @@ export default {
       ],
     }
   },
-  watch: {
-    minutes() {
-      this.handleSingleMinute()
-    },
-    seconds() {
-      this.handleSingleSecond()
-    },
-  },
-  methods: {
-    handleSingleMinute() {
+
+  computed: {
+    singleMinute() {
       if (this.minutes == 1) {
-        this.$refs.toSingleMinute.innerText = 'minut'
+        return 'minut'
       } else {
-        this.$refs.toSingleMinute.innerText = 'minuter'
+        return 'minuter'
       }
     },
 
-    handleSingleSecond() {
+    singleSecond() {
       if (this.seconds == 1) {
-        this.$refs.toSingleSecond.innerText = 'sekund'
+        return 'sekund'
       } else {
-        this.$refs.toSingleSecond.innerText = 'sekunder'
+        return 'sekunder'
       }
     },
   },
@@ -172,16 +165,18 @@ export default {
 </script>
 
 <style scoped>
-.digital {
+.text {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
-.digital h1 {
-  font-size: 4em;
+.text h1 {
+  font-size: 3.5em;
+  padding: 2rem;
   text-transform: uppercase;
 }
 </style>
