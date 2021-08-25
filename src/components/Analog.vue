@@ -1,8 +1,8 @@
 <template>
   <section class="analog">
     <div class="clock">
-      <div ref="minutes" class="minutes"></div>
       <div class="circle"></div>
+      <div ref="minutes" class="minutes"></div>
       <div ref="seconds" class="seconds"></div>
     </div>
   </section>
@@ -90,13 +90,15 @@ div.seconds {
   border-radius: 999px;
   transform-origin: bottom;
   transform: rotate(0deg);
+  z-index: 2;
 }
 div.circle {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   position: absolute;
-  border: 3px solid #000;
+  border: 1px solid #000;
+  z-index: 1;
   top: 0;
   right: 0;
   bottom: 0;

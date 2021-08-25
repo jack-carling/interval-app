@@ -117,7 +117,6 @@ export default {
 
       this.timer.addEventListener('targetAchieved', () => {
         if (payload.intervalBox) {
-          // handle interval
           this.timer.start({
             countdown: true,
             startValues: { minutes: payload.minutes },
@@ -126,19 +125,16 @@ export default {
           this.showTimesUp = false;
           return;
         } else if (payload.breakBox) {
-          // handle break
           this.showPause = true;
           this.showTimesUp = false;
           return;
         } else {
-          // handle time's up
           this.showTimesUp = true;
           this.showPause = false;
         }
       });
       this.showTimer = this.preferredTimer;
-      console.log('<app>intervalbox ', payload.intervalBox);
-      console.log('<app>breakbox ', payload.breakBox);
+      this.handleLightMode();
     },
     getNavIcon() {
       const icon = require.context('./assets/', false, /\.svg$/);
@@ -148,9 +144,13 @@ export default {
       this.showMenu = false;
       this.preferredTimer = type;
       if (this.showTimer) this.showTimer = type;
-      //Handle light/dark mode on top bar if it´s visual type
-      if (this.preferredTimer === 'visual' && this.showTimer === 'visual') {
-        this.lightMode = true;
+      this.handleLightMode();
+    },
+    handleLightMode() {
+      if (this.preferredTimer === 'visual' || this.showTimer === 'visual') {
+        if (this.showTimer !== '') {
+          this.lightMode = true;
+        }
       } else {
         this.lightMode = false;
       }

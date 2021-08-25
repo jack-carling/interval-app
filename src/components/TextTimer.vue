@@ -1,8 +1,8 @@
 <template>
   <section class="text">
     <h1>
-      {{ minutesText[minutes] }} <span> {{ singleMinute }} </span> och
-      {{ secondsText[seconds] }} <span> {{ singleSecond }} </span> kvar
+      {{ numberToText[minutes] }} <span> {{ singleMinute }} </span> och
+      {{ numberToText[seconds] }} <span> {{ singleSecond }} </span> kvar
     </h1>
   </section>
 </template>
@@ -16,7 +16,7 @@ export default {
   },
   data() {
     return {
-      secondsText: [
+      numberToText: [
         'noll',
         'en',
         'två',
@@ -78,90 +78,25 @@ export default {
         'femtioåtta',
         'femtionio',
       ],
-
-      minutesText: [
-        'noll',
-        'en',
-        'två',
-        'tre',
-        'fyra',
-        'fem',
-        'sex',
-        'sju',
-        'åtta',
-        'nio',
-        'tio',
-        'elva',
-        'tolv',
-        'tretton',
-        'fjorton',
-        'femton',
-        'sexton',
-        'sjutton',
-        'arton',
-        'nitton',
-        'tjugo',
-        'tjugoen',
-        'tjugotvå',
-        'tjugotre',
-        'tjugofyra',
-        'tjugofem',
-        'tjugosex',
-        'tjugosju',
-        'tjugoåtta',
-        'tjugonio',
-        'trettio',
-        'trettioen',
-        'trettiotvå',
-        'trettiotre',
-        'trettiofyra',
-        'trettiofem',
-        'trettiosex',
-        'trettiosju',
-        'trettioåtta',
-        'trettionio',
-        'fyrtio',
-        'fyrtioen',
-        'fyrtiotvå',
-        'fyrtiotre',
-        'fyrtiofyra',
-        'fyrtiofem',
-        'fyrtiosex',
-        'fyrtiosju',
-        'fyrtioåtta',
-        'fyrtionio',
-        'femtio',
-        'femtioen',
-        'femtiotvå',
-        'femtiotre',
-        'femtiofyra',
-        'femtiofem',
-        'femtiosex',
-        'femtiosju',
-        'femtioåtta',
-        'femtionio',
-      ],
-    }
+    };
   },
-
   computed: {
     singleMinute() {
-      if (this.minutes == 1) {
-        return 'minut'
+      if (this.minutes === 1) {
+        return 'minut';
       } else {
-        return 'minuter'
+        return 'minuter';
       }
     },
-
     singleSecond() {
-      if (this.seconds == 1) {
-        return 'sekund'
+      if (this.seconds === 1) {
+        return 'sekund';
       } else {
-        return 'sekunder'
+        return 'sekunder';
       }
     },
   },
-}
+};
 </script>
 
 <style scoped>
