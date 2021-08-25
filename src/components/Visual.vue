@@ -24,7 +24,7 @@ export default {
 <style scoped>
 div {
   width: 100vw;
-  background-color: #ccc;
+  background-color: #222;
   z-index: -1;
   transition: all 1s linear;
 }

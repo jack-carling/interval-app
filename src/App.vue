@@ -1,9 +1,21 @@
 <template>
   <div id="app">
-    <section class="topbar">
+    <section
+      class="topbar"
+      :class="lightMode ? 'light-theme' : 'dark-theme'"
+      ref="topbar"
+    >
       <img
+        v-if="preferredTimer !== 'visual' || showTimer === ''"
         class="nav"
         :src="getNavIcon()"
+        alt=""
+        @click="showMenu = !showMenu"
+      />
+      <img
+        v-else
+        class="nav"
+        src="./assets/nav-white.svg"
         alt=""
         @click="showMenu = !showMenu"
       />
@@ -77,6 +89,7 @@ export default {
       showPause: false,
       savedStartTime: 0,
       showLoading: true,
+      lightMode: false,
     };
   },
   mounted() {
@@ -86,8 +99,6 @@ export default {
   },
   methods: {
     countDown(payload) {
-      this.showTimer = 'visual';
-      console.log('in countdown app', payload.minutes);
       this.savedStartTime = payload.minutes;
       this.timer.start({
         countdown: true,
@@ -111,14 +122,18 @@ export default {
             countdown: true,
             startValues: { minutes: payload.minutes },
           });
+          this.showPause = false;
+          this.showTimesUp = false;
           return;
         } else if (payload.breakBox) {
           // handle break
           this.showPause = true;
+          this.showTimesUp = false;
           return;
         } else {
           // handle time's up
           this.showTimesUp = true;
+          this.showPause = false;
         }
       });
       this.showTimer = this.preferredTimer;
@@ -133,6 +148,12 @@ export default {
       this.showMenu = false;
       this.preferredTimer = type;
       if (this.showTimer) this.showTimer = type;
+      //Handle light/dark mode on top bar if it´s visual type
+      if (this.preferredTimer === 'visual' && this.showTimer === 'visual') {
+        this.lightMode = true;
+      } else {
+        this.lightMode = false;
+      }
     },
     handleAbort() {
       this.showTimer = '';
@@ -142,6 +163,7 @@ export default {
       this.minutesLeft = 0;
       this.secondsLeft = 0;
       this.preferredTimer = 'digital';
+      this.lightMode = false;
     },
     handleReset() {
       this.handleAbort();
@@ -189,6 +211,12 @@ body {
   align-items: center;
   z-index: 2000;
   width: 100vw;
+}
+.light-theme {
+  color: #fff;
+}
+.dark-theme {
+  color: #222;
 }
 .title {
   left: 50%;
