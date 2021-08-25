@@ -24,5 +24,6 @@ export default {
 }
 .digital h1 {
   font-size: 4em;
+  letter-spacing: 0.1em;
 }
 </style>
